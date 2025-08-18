@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пицца и точка - Настоящая пицца с 25-летней историей</title>
+    <style>
+        /* --- Глобальные стили и переменные --- */
+        :root {
+            --primary-color: #D35400; /* Насыщенный оранжевый */
+            --secondary-color: #E67E22; /* Светло-оранжевый */
+            --dark-color: #2C3E50; /* Темно-синий/серый */
+            --light-color: #ECF0F1; /* Светло-серый */
+            --background-color: #FDF5E6; /* Теплый бежевый/кремовый */
+            --font-family: 'Roboto', sans-serif;
+        }
+
+        /* --- Сброс стилей и базовые настройки --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            background-color: var(--background-color);
+            color: var(--dark-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3 {
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            color: var(--primary-color);
+            text-transform: uppercase;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+        
+        section:nth-of-type(even) {
+            background-color: #fff;
+        }
+
+        /* --- Навигационное меню --- */
+        .navbar {
+            background: rgba(44, 62, 80, 0.9);
+            color: #fff;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        .navbar .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .navbar .nav-links li {
+            margin-left: 25px;
+        }
+
+        .navbar .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .navbar .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: var(--secondary-color);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .navbar .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .navbar .nav-links a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+        
+        /* Гамбургер-меню для мобильных */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle .bar {
+            height: 3px;
+            width: 25px;
+            background-color: #fff;
+            margin: 4px 0;
+            transition: 0.4s;
+        }
+
+
+        /* --- Главный раздел (Hero) --- */
+        #hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1594007654729-407eedc4be65?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=3600') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+            padding: 0 20px;
+        }
+
+        #hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        #hero p {
+            font-size: 1.5rem;
+            max-width: 600px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: #fff;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        /* --- Раздел "О нас" --- */
+        #about .about-content {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 50px;
+            align-items: center;
+        }
+
+        #about img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        #about p {
+            margin-bottom: 15px;
+        }
+
+        /* --- Раздел "Процесс изготовления" --- */
+        #process .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .step {
+            padding: 20px;
+        }
+
+        .step .icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .step h3 {
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+
+        /* --- Раздел "Качество продуктов" --- */
+        #quality {
+             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=3600') no-repeat center center/cover;
+             color: #fff;
+             text-align: center;
+        }
+        
+        #quality .container {
+            max-width: 800px;
+        }
+        
+        #quality h2 {
+            color: #fff;
+        }
+        
+        /* --- Раздел "Соревнования" --- */
+        #competitions .awards-list {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 50px;
+            text-align: center;
+        }
+        
+        .award {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            width: 250px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .award:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.12);
+        }
+        
+        .award .award-icon {
+            font-size: 3rem;
+            color: #ffd700;
+        }
+        
+        .award h3 {
+            margin-top: 15px;
+            color: var(--primary-color);
+        }
+
+        /* --- Меню --- */
+        #menu .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .menu-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .menu-item img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-right: 20px;
+            object-fit: cover;
+        }
+
+        .menu-item-info h3 {
+            margin: 0;
+            color: var(--dark-color);
+        }
+
+        .menu-item-info p {
+            margin: 5px 0 10px;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        /* --- Контакты --- */
+        #contact .contact-content {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 50px;
+            align-items: flex-start;
+        }
+        
+        .contact-info, .contact-form {
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+        }
+        
+        .contact-info h3 {
+            color: var(--primary-color);
+        }
+
+        .contact-info ul {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .contact-info li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .contact-info .icon {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            margin-right: 15px;
+            width: 25px;
+        }
+        
+        .online-order {
+            margin-top: 30px;
+        }
+
+        /* --- Футер --- */
+        footer {
+            background: var(--dark-color);
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        /* --- Адаптивность --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            #hero h1 { font-size: 3rem; }
+            #hero p { font-size: 1.2rem; }
+
+            /* Мобильное меню */
+            .navbar .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: rgba(44, 62, 80, 0.98);
+                position: absolute;
+                top: 70px;
+                left: 0;
+                text-align: center;
+            }
+
+            .navbar .nav-links.active {
+                display: flex;
+            }
+            
+            .navbar .nav-links li {
+                margin: 15px 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+            
+            #about .about-content,
+            #contact .contact-content {
+                grid-template-columns: 1fr;
+            }
+            
+            #about img {
+                margin-top: 30px;
+                order: -1; /* Изображение будет сверху на мобильных */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            #hero h1 { font-size: 2.5rem; }
+            .menu-grid { grid-template-columns: 1fr; }
+        }
+
+    </style>
+    <!-- Подключаем иконки и шрифты -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css/2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Навигационное меню -->
+    <header class="navbar">
+        <div class="container">
+            <a href="#hero" class="logo">Пицца и точка</a>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#process">Процесс</a></li>
+                <li><a href="#quality">Качество</a></li>
+                <li><a href="#competitions">Награды</a></li>
+                <li><a href="#menu">Меню</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <!-- Главный раздел -->
+        <section id="hero">
+            <h1>25 лет создаем шедевры: это не просто пицца, это «Пицца и точка».</h1>
+            <p>Почувствуйте вкус настоящей страсти и традиций в каждом кусочке. Зайдите к нам и убедитесь сами!</p>
+            <a href="#menu" class="btn">Посмотреть меню</a>
+        </section>
+
+        <!-- Раздел "О нас" -->
+        <section id="about">
+            <div class="container">
+                <h2>Наша история</h2>
+                <div class="about-content">
+                    <div>
+                        <h3>Четверть века с любовью к пицце</h3>
+                        <p>«Пицца и точка» — это не просто пиццерия, это семейное дело, которое мы начали 25 лет назад. Все начиналось с маленькой печи и большой мечты: готовить лучшую пиццу в городе, используя только традиционные рецепты и самые свежие продукты.</p>
+                        <p>За эти годы мы выросли, но наши принципы остались неизменны. Мы гордимся своей историей, но не боимся смотреть в будущее. Наша команда постоянно следит за новыми кулинарными трендами, чтобы моментально учитывать потребности наших гостей и предлагать как вечную классику, так и смелые новинки.</p>
+                    </div>
+                    <div>
+                        <!-- ЗАМЕНИТЕ ЭТО ИЗОБРАЖЕНИЕ НА ФОТО ВАШЕЙ ПИЦЦЕРИИ -->
+                        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=3600" alt="Интерьер пиццерии">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Раздел "Процесс изготовления" -->
+        <section id="process">
+            <div class="container">
+                <h2>Как мы создаем шедевры</h2>
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="icon"><i class="fas fa-seedling"></i></div>
+                        <h3>Отборные ингредиенты</h3>
+                        <p>Мы лично отбираем лучшие локальные продукты: свежие овощи, фермерские сыры и натуральное мясо.</p>
+                    </div>
+                    <div class="step">
+                        <div class="icon"><i class="fas fa-tint"></i></div>
+                        <h3>Идеальное тесто</h3>
+                        <p>Наше тесто "дышит" не менее 48 часов, что делает его легким, воздушным и невероятно вкусным.</p>
+                    </div>
+                    <div class="step">
+                        <div class="icon"><i class="fas fa-hand-paper"></i></div>
+                        <h3>Ручная работа</h3>
+                        <p>Каждая основа для пиццы раскатывается вручную нашими пиццайоло, которые вкладывают в нее свою душу.</p>
+                    </div>
+                    <div class="step">
+                        <div class="icon"><i class="fas fa-fire-alt"></i></div>
+                        <h3>Настоящая печь</h3>
+                        <p>Мы выпекаем пиццу в дровяной печи при температуре 400°C, что придает ей неповторимый аромат и хрустящую корочку.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Раздел "Качество продуктов" -->
+        <section id="quality">
+            <div class="container">
+                <h2>Гарантия качества в каждом кусочке</h2>
+                <p>Мы верим, что вкус пиццы начинается с качества ее составляющих. Именно поэтому мы используем только итальянскую муку высшего сорта, томаты Сан-Марцано для нашего соуса, свежайшую моцареллу и оливковое масло первого холодного отжима. Мы не используем замороженные продукты и консерванты. Только свежесть, только натуральность, только лучший вкус.</p>
+                 <a href="#contact" class="btn">Заказать сейчас</a>
+            </div>
+        </section>
+        
+        <!-- Раздел "Участие в соревнованиях" -->
+        <section id="competitions">
+            <div class="container">
+                 <h2>Наши достижения</h2>
+                 <p style="text-align: center; max-width: 800px; margin: 0 auto 50px;">Мы не просто готовим пиццу — мы стремимся к совершенству. Наша страсть и мастерство признаны на многочисленных кулинарных конкурсах.</p>
+                 <div class="awards-list">
+                     <div class="award">
+                         <div class="award-icon"><i class="fas fa-trophy"></i></div>
+                         <h3>Золотая Пицца 2024</h3>
+                         <p>Победитель в номинации "Лучшая классическая Маргарита".</p>
+                     </div>
+                     <div class="award">
+                          <div class="award-icon"><i class="fas fa-medal"></i></div>
+                         <h3>Чемпионат Пиццайоло</h3>
+                         <p>Финалисты в категории "Авторская пицца".</p>
+                     </div>
+                     <div class="award">
+                          <div class="award-icon"><i class="fas fa-award"></i></div>
+                         <h3>Выбор Города 2023</h3>
+                         <p>Приз зрительских симпатий за лучшую пиццерию.</p>
+                     </div>
+                 </div>
+            </div>
+        </section>
+
+        <!-- Меню -->
+        <section id="menu">
+            <div class="container">
+                <h2>Наше меню</h2>
+                <div class="menu-grid">
+                    <!-- ЗАМЕНИТЕ ЭТИ ИЗОБРАЖЕНИЯ НА ФОТО ВАШИХ ПИЦЦ -->
+                    <!-- Позиция 1 -->
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=3600" alt="Пицца Маргарита">
+                        <div class="menu-item-info">
+                            <h3>Маргарита Классика</h3>
+                            <p>Томатный соус, моцарелла, свежий базилик</p>
+                            <div class="price">550 ₽</div>
+                        </div>
+                    </div>
+                    <!-- Позиция 2 -->
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=3600" alt="Пицца Пепперони">
+                        <div class="menu-item-info">
+                            <h3>Пепперони Файер</h3>
+                            <p>Томатный соус, моцарелла, острая пепперони</p>
+                            <div class="price">650 ₽</div>
+                        </div>
+                    </div>
+                    <!-- Позиция 3 -->
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=3600" alt="Пицца Четыре сыра">
+                        <div class="menu-item-info">
+                            <h3>Четыре Сыра Гурмэ</h3>
+                            <p>Моцарелла, дорблю, пармезан, чеддер, грецкий орех</p>
+                            <div class="price">720 ₽</div>
+                        </div>
+                    </div>
+                    <!-- Позиция 4 -->
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1590947132387-155cc02f3212?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=3600" alt="Пицца с грибами">
+                        <div class="menu-item-info">
+                            <h3>Лесная Сказка</h3>
+                            <p>Сливочный соус, моцарелла, шампиньоны, белые грибы</p>
+                            <div class="price">690 ₽</div>
+                        </div>
+                    </div>
+                    <!-- Позиция 5 -->
+                     <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=3600" alt="Пицца с курицей">
+                        <div class="menu-item-info">
+                            <h3>Цыпленок Барбекю</h3>
+                            <p>Соус барбекю, моцарелла, куриное филе, красный лук</p>
+                            <div class="price">680 ₽</div>
+                        </div>
+                    </div>
+                    <!-- Позиция 6 -->
+                     <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1588315029754-2dd089d39a1a?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=3600" alt="Пицца Вегетарианская">
+                        <div class="menu-item-info">
+                            <h3>Вегги Делюкс</h3>
+                            <p>Томатный соус, моцарелла, брокколи, перец, томаты, оливки</p>
+                            <div class="price">620 ₽</div>
+                        </div>
+                    </div>
+                     <!-- Позиция 7 -->
+                     <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=3600" alt="Пицца Гавайская">
+                        <div class="menu-item-info">
+                            <h3>Гавайский Бриз</h3>
+                            <p>Сливочный соус, моцарелла, ветчина, ананасы</p>
+                            <div class="price">660 ₽</div>
+                        </div>
+                    </div>
+                    <!-- Позиция 8 -->
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1628840042765-356cda07504e?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=3600" alt="Пицца Мясная">
+                        <div class="menu-item-info">
+                            <h3>Мясной Пир</h3>
+                            <p>Томатный соус, моцарелла, пепперони, ветчина, бекон</p>
+                            <div class="price">790 ₽</div>
+                        </div>
+                    </div>
+                    <!-- Позиция 9 -->
+                    <div class="menu-item">
+                        <img src="https://images.unsplash.com/photo-1552539618-7eec9b4d1796?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=3600" alt="Пицца с грушей и горгонзолой">
+                        <div class="menu-item-info">
+                            <h3>Груша и Горгонзола</h3>
+                            <p>Сливочный соус, моцарелла, горгонзола, груша, мед</p>
+                            <div class="price">750 ₽</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Контакты -->
+        <section id="contact">
+            <div class="container">
+                <h2>Свяжитесь с нами</h2>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h3>Наша пиццерия</h3>
+                        <p>Мы всегда рады видеть вас в гостях! Приходите за своей любимой пиццей или забирайте с собой.</p>
+                        <ul>
+                            <li><span class="icon"><i class="fas fa-map-marker-alt"></i></span> г. Ваш Город, ул. Центральная, д. 10</li>
+                            <li><span class="icon"><i class="fas fa-phone-alt"></i></span> +7 (999) 123-45-67</li>
+                            <li><span class="icon"><i class="fas fa-clock"></i></span><strong>Часы работы:</strong><br>Пн-Вс: 11:00 - 23:00</li>
+                        </ul>
+                         <div class="online-order">
+                            <h3>Заказ онлайн</h3>
+                            <p>Хотите пиццу прямо сейчас? Закажите онлайн с доставкой или самовывозом!</p>
+                            <a href="#" class="btn">Заказать онлайн</a>
+                        </div>
+                    </div>
+                    <!-- Карта (можно вставить iframe с Яндекс.Карт или Google Maps) -->
+                    <div class="contact-map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2245.393417124911!2d37.6155613158931!3d55.752220480554!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54a50b315e573%3A0x86dce5f7694f4204!2z0JzQvtGB0LrQstCw!5e0!3m2!1sru!2sru!4v1633434937222!5m2!1sru!2sru" width="100%" height="450" style="border:0; border-radius: 10px;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Пицца и точка. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Скрипт для мобильного меню
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.getElementById('nav-links');
+
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // Закрытие меню при клике на ссылку
+        const links = document.querySelectorAll('.nav-links li a');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
